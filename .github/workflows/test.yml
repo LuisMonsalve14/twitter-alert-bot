@@ -1,25 +1,28 @@
-name: Telegram Test
+name: Twitter Alert
 
 on:
-  workflow_dispatch:
+schedule:
+- cron: "*/15 * * * *"
+
+workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+check-twitter:
+runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+```
+steps:
+  - uses: actions/checkout@v4
 
-      - name: Instalar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+  - uses: actions/setup-python@v5
+    with:
+      python-version: "3.11"
 
-      - name: Instalar dependencias
-        run: pip install -r requirements.txt
+  - run: pip install -r requirements.txt
 
-      - name: Ejecutar bot
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-        run: python main.py
+  - name: Ejecutar monitor
+    env:
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      CHAT_ID: ${{ secrets.CHAT_ID }}
+    run: python main.py
+```

@@ -23,34 +23,30 @@ current_post = link
 old_post = ""
 
 if os.path.exists(LAST_POST_FILE):
-with open(LAST_POST_FILE, "r") as f:
-old_post = f.read().strip()
+    with open(LAST_POST_FILE, "r") as f:
+        old_post = f.read().strip()
 
 if current_post != old_post:
 
-```
-message = f"""🚨 Nueva publicación de @fedesturze
-```
+    message = f"""🚨 Nueva publicación de @fedesturze
 
 {title}
 
 {link}
 """
 
-```
-requests.get(
-    f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
-    params={
-        "chat_id": CHAT_ID,
-        "text": message
-    }
-)
+    requests.get(
+        f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+        params={
+            "chat_id": CHAT_ID,
+            "text": message
+        }
+    )
 
-with open(LAST_POST_FILE, "w") as f:
-    f.write(current_post)
+    with open(LAST_POST_FILE, "w") as f:
+        f.write(current_post)
 
-print("Nueva publicación enviada")
-```
+    print("Nueva publicación enviada")
 
 else:
-print("Sin novedades")
+    print("Sin novedades")

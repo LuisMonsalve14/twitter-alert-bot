@@ -1,28 +1,27 @@
 name: Twitter Alert
 
 on:
-schedule:
-- cron: "*/15 * * * *"
+  schedule:
+    - cron: "*/15 * * * *"
 
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-check-twitter:
-runs-on: ubuntu-latest
+  check-twitter:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  - uses: actions/setup-python@v5
-    with:
-      python-version: "3.11"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-  - run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-  - name: Ejecutar monitor
-    env:
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      CHAT_ID: ${{ secrets.CHAT_ID }}
-    run: python main.py
-```
+      - name: Run bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python main.py
